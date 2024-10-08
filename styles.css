@@ -1,0 +1,39 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #f0f4f8;
+  padding: 20px;
+  background-image: 
+    radial-gradient(circle at 20px 20px, #ffffff 2px, transparent 0),
+    radial-gradient(circle at 60px 60px, #ffffff 2px, transparent 0);
+  background-size: 80px 80px;
+}
+
+.planner-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* Remaining CSS content as provided by the user */
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
