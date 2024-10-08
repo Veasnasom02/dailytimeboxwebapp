@@ -1,29 +1,29 @@
 // Disable right-click
-    document.addEventListener('contextmenu', function(e) {
-      e.preventDefault();
-    });
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
 
-    // Disable Ctrl+U
-    document.addEventListener('keydown', function(e) {
-      if (e.ctrlKey && e.key === 'u') {
-        e.preventDefault();
-      }
-    });
+// Disable Ctrl+U
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.key === 'u') {
+    e.preventDefault();
+  }
+});
 
-    // Simple login mechanism (replace with server-side authentication in production)
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+// Simple login mechanism (replace with server-side authentication in production)
+document.getElementById('login-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
 
-      // Replace with actual authentication logic
-      if (username === 'admin' && password === 'password') {
-        document.getElementById('login-overlay').style.display = 'none';
-        document.querySelector('.planner-container').style.display = 'block';
-      } else {
-        alert('Invalid credentials. Please try again.');
-      }
-    });
+  // Replace with actual authentication logic
+  if (username === 'admin' && password === 'password') {
+    document.getElementById('login-overlay').style.display = 'none';
+    document.querySelector('.planner-container').style.display = 'block';
+  } else {
+    alert('Invalid credentials. Please try again.');
+  }
+});
 
 document.addEventListener('DOMContentLoaded', function () {
   const taskList = document.getElementById('task-list');
@@ -31,11 +31,15 @@ document.addEventListener('DOMContentLoaded', function () {
   const summaryList = document.getElementById('summary-list');
   const progressBar = document.getElementById('task-progress');
   const progressText = document.getElementById('progress-text');
+  const printButton = document.getElementById('print-planner');
 
-  function createTaskRow(time = '') {
+  function createTaskRow(startTime = '', endTime = '') {
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td><input type="time" value="${time}"></td>
+      <td>
+        <input type="time" class="start-time" value="${startTime}"> - 
+        <input type="time" class="end-time" value="${endTime}">
+      </td>
       <td><input type="text" placeholder="Enter task"></td>
       <td><input type="checkbox" class="task-done"></td>
       <td class="task-actions">
@@ -50,50 +54,4 @@ document.addEventListener('DOMContentLoaded', function () {
     const completedTasks = taskList.querySelectorAll('.task-done:checked').length;
     const progressPercentage = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
     
-    progressBar.style.width = `${progressPercentage}%`;
-    progressText.textContent = `${Math.round(progressPercentage)}% of tasks completed`;
-  }
-
-  function updateSummary(taskText, isCompleted) {
-    if (isCompleted) {
-      const listItem = document.createElement('li');
-      listItem.textContent = taskText;
-      listItem.classList.add('completed-task');
-      summaryList.appendChild(listItem);
-    } else {
-      const items = summaryList.getElementsByTagName('li');
-      for (let i = 0; i < items.length; i++) {
-        if (items[i].textContent === taskText) {
-          summaryList.removeChild(items[i]);
-          break;
-        }
-      }
-    }
-  }
-
-  addTaskButton.addEventListener('click', function() {
-    const newRow = createTaskRow();
-    taskList.appendChild(newRow);
-    updateProgress();
-  });
-
-  taskList.addEventListener('click', function(e) {
-    if (e.target.classList.contains('remove-task')) {
-      e.target.closest('tr').remove();
-      updateProgress();
-    }
-  });
-
-  taskList.addEventListener('change', function(e) {
-    if (e.target.classList.contains('task-done')) {
-      const taskText = e.target.closest('tr').querySelector('input[type="text"]').value;
-      updateSummary(taskText, e.target.checked);
-      updateProgress();
-    }
-  });
-
-  // Initialize with a few empty rows
-  for (let i = 0; i < 3; i++) {
-    taskList.appendChild(createTaskRow());
-  }
-});
+    progressBar.style.width
